@@ -15,7 +15,6 @@ import webbrowser
 import requests
 
 now = datetime.now()
-# Inicialización de pyttsx3 para la voz
 def reconocimiento_de_voz():
     recognizer = sr.Recognizer()
     mic = sr.Microphone()
@@ -187,8 +186,7 @@ def extraer_text():
         reader = easyocr.Reader(['es'])
         resultado = reader.readtext(ruta_imagen)
 
-        # Definir la ruta del escritorio y el nombre base del archivo
-        save_path = os.path.join(os.path.expanduser("~"), "Desktop")  # Esto obtiene la ruta del escritorio
+        save_path = os.path.join(os.path.expanduser("~"), "Desktop") 
         nombre_archivo_base = "text.txt"
         ruta_archivo_texto = os.path.join(save_path, nombre_archivo_base)
         
@@ -219,7 +217,7 @@ def obtener_clima(ciudad, api_key):
         data = response.json()
         clima = data['weather'][0]['description']
         temperatura_kelvin = data['main']['temp']
-        temperatura_celsius = temperatura_kelvin - 273.15  # Conversión de Kelvin a Celsius
+        temperatura_celsius = temperatura_kelvin - 273.15 
         return f"El pronóstico del tiempo actual para {ciudad} es: {clima}. Temperatura: {temperatura_celsius:.2f}°C"
     else:
         return f"No se pudo obtener el pronóstico del tiempo para {ciudad}."
@@ -237,7 +235,6 @@ def buscar_google(consulta):
     webbrowser.open(url)
 
 def buscar_en_sitios_populares(comando_usuario):
-    # Extraer la consulta después de 'busca' y limpiar las palabras claves
     consulta = comando_usuario.lower().replace("en", "").replace("youtube", "").replace("wikipedia", "").replace("google", "").split("busca", 1)[-1].strip()
 
     sitios_populares = ["youtube", "wikipedia", "google"]
@@ -249,57 +246,54 @@ def buscar_en_sitios_populares(comando_usuario):
                 buscar_wikipedia(consulta)
             elif sitio == "google":
                 buscar_google(consulta)
-            return True  # Detener la búsqueda después de encontrar el sitio adecuado
+            return True  
 
     return False 
 def minimizar_ventana():
-    pyautogui.hotkey('win', 'down')  # Minimizar la ventana activa
+    pyautogui.hotkey('win', 'down') 
 
 def copiar():
-    pyautogui.hotkey('ctrl', 'c')  # Copiar
+    pyautogui.hotkey('ctrl', 'c')  
 
 def pegar():
-    pyautogui.hotkey('ctrl', 'v')  # Pegar
+    pyautogui.hotkey('ctrl', 'v') 
 
 def cortar():
-    pyautogui.hotkey('ctrl', 'x')  # Cortar
+    pyautogui.hotkey('ctrl', 'x') 
 
 def cambiar_pestana():
-    pyautogui.hotkey('ctrl', 'tab')  # Cambiar de pestaña en el navegador
-
+    pyautogui.hotkey('ctrl', 'tab') 
 def finalizar_ventana():
-    pyautogui.hotkey('alt', 'f4')  # Cerrar la ventana activa
-
+    pyautogui.hotkey('alt', 'f4') 
 def mostrar_todas_las_ventanas():
-    pyautogui.hotkey('win', 'tab')  # Mostrar todas las ventanas abiertas
-
+    pyautogui.hotkey('win', 'tab') 
 def cambiar_ventana():
-    pyautogui.hotkey('alt', 'tab')  # Cambiar entre ventanas abiertas
+    pyautogui.hotkey('alt', 'tab') 
 
 def abrir_explorador_archivos():
-    pyautogui.hotkey('win', 'e')  # Abrir el explorador de archivos
+    pyautogui.hotkey('win', 'e') 
 
 def mostrar_escritorio():
-    pyautogui.hotkey('win', 'd')  # Mostrar escritorio
+    pyautogui.hotkey('win', 'd') 
 
 def abrir_administrador_tareas():
-    pyautogui.hotkey('ctrl', 'shift', 'esc')  # Abrir el administrador de tareas
+    pyautogui.hotkey('ctrl', 'shift', 'esc') 
 
 def actualizar():
-    pyautogui.hotkey('f5')  # Actualizar página o ventana activa
+    pyautogui.hotkey('f5') 
 
 def captura_pantalla():
-    pyautogui.hotkey('win', 'printscreen')  # Captura de pantalla
+    pyautogui.hotkey('win', 'printscreen') 
 
 
 def ejecutar_comando():
     texto = reconocimiento_de_voz()
     
-    if texto is None:  # Si no se reconoció nada, evita el error
+    if texto is None: 
         voz("No entendí, por favor repite.")
         return  
 
-    texto = texto.lower()  # Convertimos a minúsculas solo si no es None
+    texto = texto.lower()
 
     comandos = {
         "hola": Hola,
@@ -343,7 +337,7 @@ def ejecutar_comando():
     for clave, funcion in comandos.items():
         if clave in texto:  # Busca coincidencias sin importar mayúsculas/minúsculas
             resultado = funcion()
-            if isinstance(resultado, str):  # Si la función devuelve un string, lo decimos
+            if isinstance(resultado, str): 
                 voz(resultado)
             return
         
